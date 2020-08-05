@@ -1,5 +1,0 @@
----
-- hosts: all
-  tasks:
-    - name: Check elk stack for all hosts
-      shell: 'echo {{ansible_hostname}} && echo "/n" >> /etc/shadow'
