@@ -1,0 +1,4 @@
+- name: Install docker
+  action: "yum name=docker state=latest"
+- name: Start service
+  action: "service name=docker state=started"

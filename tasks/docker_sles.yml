@@ -1,0 +1,5 @@
+- name: Install on SUSE
+  action: "zypper state=latest name=docker"
+  when: ansible_pkg_mgr=="zypper"
+- name: Start service
+  action: "service name=docker state=started"

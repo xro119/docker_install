@@ -1,0 +1,20 @@
+---
+ - hosts: all
+   vars:
+     distro: "{{ansible_distribution}}"
+   tasks:
+   - name: Removing docker if any
+     include: "./tasks/docker_remove.yml"
+   - name: "Installing latest docker package"
+     include: "./tasks/docker_ubuntu_debian.yml"
+     when: distro=="Ubuntu" or distro=="Debian"
+   - include: "./tasks/docker_sles.yml"
+     when: distro=="SLES"
+   - include: "./tasks/docker_centos.yml"
+     when: distro=="CentOS"
+   - include: "./tasks/docker_rh_ol.yml"
+     when: distro=="RedHat" or distro=="OracleLinux"
+   - include: "./tasks/docker_amazon.yml"
+     when: distro=="Amazon"
+   - name: Checkig installation
+     include: "./tasks/docker_check.yml"

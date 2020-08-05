@@ -1,0 +1,12 @@
+- name: Install prereq
+  action: "yum state=latest name=yum-utils"
+- name: Add repo
+  shell: "yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo"
+- name: Install on CentOS 7
+  action: "yum state=latest name=docker-ce"
+  when: ansible_distribution_major_version=="7"
+- name: Install on CentOS 8
+  command: yum install --nobest docker-ce -y
+  when: ansible_distribution_major_version=="8"
+- name: Start docker service
+  action: "service state=started name=docker"

@@ -1,0 +1,6 @@
+- name: Check instalation Ubu/Deb/Cen/Sle
+  command: "docker run hello-world"
+  when: ansible_distribution!="RedHat" and ansible_distribution!="OracleLinux"
+- name: Check installtion RH/OL
+  command: "podman run hello-world"
+  when: ansible_distribution=="RedHat" or ansible_distribution=="OracleLinux"

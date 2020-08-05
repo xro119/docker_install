@@ -1,0 +1,12 @@
+---
+ - hosts: all
+   vars_files:
+   - "./vars/vars.yml"
+   tasks:
+   ### COPY PACKAGES
+   - name: Debug
+     debug:
+       msg: 
+       - "Manger IP: {{soteria_manager_ip}}"
+   - name: Check for manager-cli to be installed
+     include_tasks: "./tasks/config_and_check.yml"

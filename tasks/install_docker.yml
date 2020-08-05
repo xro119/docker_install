@@ -1,0 +1,29 @@
+- name: Get curl
+  action: "{{ansible_pkg_mgr}} state=present name=curl"
+- name: Get installer and install
+  shell: "curl -fsSL https://get.docker.com -o /root/get-docker.sh && chmod 755 /root/get-docker.sh && /root/get-docker.sh"
+  when: ansible_distribution=="Debian" or ansible_distribution=="Ubuntu" or ansible_distribution=="Centos"
+
+  ### Upgrade docker
+- name: Install on Ubuntu/Debian
+  action: "apt state=latest name=docker-ce,docker-ce-cli,containerd.io update_cache=yes"
+  when: ansible_pkg_mgr=="apt"
+- name: Install on SUSE
+  action: "zypper state=latest name=docker"
+  when: ansible_pkg_mgr=="zypper"
+- name: Install on CentOS
+  action: "yum state=latest name=docker-ce"
+  when: ansible_distribution_major_version=="7" and ansible_distribution=="CentOS"
+- name: Install on centos 8
+  command: yum install --nobest docker-ce -y
+  when: ansible_distribution_major_version=="8" and ansible_distribution=="CentOS"
+- name: Install on Redhat (podman)
+  action: "yum state=latest name=podman"
+  when: ansible_distribution=="RedHat" or ansible_distribution=="OracleLinux"
+- name: Check instalation Ubu/Deb/Cen/Sle
+  command: "docker run hello-world"
+  when: ansible_distribution!="RedHat" and ansible_distribution!="OracleLinux"
+- name: Check installtion RH/OL
+  command: "podman run hello-world"
+  when: ansible_distribution=="RedHat" or ansible_distribution=="OracleLinux"
+

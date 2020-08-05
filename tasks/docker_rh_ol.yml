@@ -1,0 +1,8 @@
+- name: Install on Redhat and Oracle (podman)
+  action: "yum state=latest name=podman enablerepo=rhel-7-server-extras-rpms"
+  when: ansible_distribution_release=="Maipo"
+- name: Install on Redhat and Oracle (podman)
+  action: "yum state=latest name=podman"
+  when: ansible_distribution_release!="Maipo"
+- name: Check installtion RH/OL
+  command: "podman run hello-world"
